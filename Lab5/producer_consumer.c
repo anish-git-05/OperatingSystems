@@ -23,7 +23,7 @@ int main(){
             sem_wait(FULL);
             sem_wait(MUTEX);
             int a=mem->buffer[mem->out];
-            mem->out=(mem->out+1)%5;
+            mem->out=(mem->out+1)%20;
             printf("consumer %d: %d",getpid(),a);
         }
         exit(0); 
@@ -32,9 +32,9 @@ int main(){
         sem_wait(EMPTY);
         sem_wait(MUTEX);
         mem->buffer[mem->in]=i+1;
-        mem->in=(mem->in+1)%5;
+        mem->in=(mem->in+1)%20;
         sem_signal(MUTEX);
-        sem_wait(FULL);
+        sem_signal(FULL);
         printf("producer %d: %d",getpid(),i+1);
     }
     wait(0);
